@@ -1,7 +1,7 @@
 name: A workflow for my Hello World file
 on: push
 jobs:
-  first job:
+  first_job:
     name: Hello world action
     runs-on: ubuntu-latest
     steps:
@@ -10,7 +10,7 @@ jobs:
         with:
           MY_NAME: "Mona"
 
-  second job:
+  second_job:
     name: Hellow world 2
     runs-on: ubuntu-latest
     steps:
