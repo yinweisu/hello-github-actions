@@ -16,6 +16,6 @@ jobs:
             pwd
             ls
       - name: show event
-        run: echo ${{ github.event_name }}
+        run: echo "test ${{ github.event_name }}"
           
      
