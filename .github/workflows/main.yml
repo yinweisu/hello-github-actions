@@ -20,5 +20,6 @@ jobs:
             echo "test ${{ github.event_name }}"
             echo run number is $GITHUB_RUN_NUMBER
             echo PR#${{ github.event.number }}-${{ github.sha }}
+            echo Short SHA: ${GITHUB_SHA::8}
           
      
