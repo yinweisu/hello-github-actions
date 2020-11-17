@@ -16,6 +16,8 @@ jobs:
             pwd
             ls
       - name: show event
-        run: echo "test ${{ github.event_name }}"
+        run: |
+            echo "test ${{ github.event_name }}"
+            echo run number is $GITHUB_RUN_NUMBER
           
      
