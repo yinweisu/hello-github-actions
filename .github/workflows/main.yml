@@ -9,16 +9,14 @@ jobs:
     name: Hello world action
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v1
-      - name: greeting
-        uses: ./action-a
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
+        uses: peter-evans/create-or-update-comment@v1.4.3
         with:
-          MY_NAME: "Mona"
-      - name: show working dir
-        run: |
-            pwd
-            ls
+          issue-number: ${{ github.event.number }}
+          body: |
+            Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. 
+            Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/${GITHUB_SHA::8}/index.html 
       - name: show event
         run: |
             echo "test ${{ github.event_name }}"
