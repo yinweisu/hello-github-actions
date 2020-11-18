@@ -20,7 +20,6 @@ jobs:
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
-        env:
         uses: peter-evans/create-or-update-comment@v1.4.3
         with:
           issue-number: ${{ github.event.number }}
