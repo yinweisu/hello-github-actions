@@ -24,4 +24,4 @@ jobs:
           issue-number: ${{ github.event.number }}
           body: |
             Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. 
-            Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/{{ env.TEST }}/index.html 
+            Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/${{ env.TEST }}/index.html 
