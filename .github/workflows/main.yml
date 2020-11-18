@@ -7,17 +7,15 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: greeting
-        uses: ./action-a
-        with:
-          MY_NAME: "Mona"
-      - name: show working dir
-        run: |
-            pwd
-            ls
       - name: show event
         run: |
             echo "test ${{ github.event_name }}"
             echo run number is $GITHUB_RUN_NUMBER
-          
+      - name: Comment on PR
+        uses: peter-evans/create-or-update-comment@v1.4.3
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. 
+            Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/${GITHUB_SHA::8}/index.html 
      
