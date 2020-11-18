@@ -15,13 +15,20 @@ jobs:
         run: |
             echo "test ${{ github.event_name }}"
             echo run number is $GITHUB_RUN_NUMBER
-      - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
         env:
-            TEST: ${GITHUB_SHA::8}
-        uses: peter-evans/create-or-update-comment@v1.4.3
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          issue-number: ${{ github.event.number }}
-          body: |
-            Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. 
-            Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/${{ env.GITHUB_SHA }}/index.html 
+          msg: "Check out this message!"
+          check_for_duplicate_msg: false  # OPTIONAL
+      # - name: Comment on PR
+      #   if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
+      #   env:
+      #       TEST: ${GITHUB_SHA::8}
+      #   uses: peter-evans/create-or-update-comment@v1.4.3
+      #   with:
+      #     issue-number: ${{ github.event.number }}
+      #     body: |
+      #       Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. 
+      #       Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/${{ env.TEST }}/index.html 
