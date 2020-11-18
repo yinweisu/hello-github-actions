@@ -20,7 +20,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "Check out this message!"
+          msg: "Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. "
           check_for_duplicate_msg: false  # OPTIONAL
       # - name: Comment on PR
       #   if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
