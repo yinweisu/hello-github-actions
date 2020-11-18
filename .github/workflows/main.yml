@@ -21,10 +21,9 @@ jobs:
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
         env:
-            TEST: ${GITHUB_SHA::8}
         uses: peter-evans/create-or-update-comment@v1.4.3
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            Job ${{ github.event.number }}-${GITHUB_SHA::8} is done. 
+            Job ${{ github.event.number }}-${{ steps.vars.outputs.sha_short }} is done. 
             Docs are uploaded to http://gluon-vision-staging.s3-website-us-west-2.amazonaws.com/${{ github.event.number }}/${{ steps.vars.outputs.sha_short }}/index.html 
