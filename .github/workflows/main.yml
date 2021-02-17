@@ -10,12 +10,10 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.7
-      - name: Checkout TVM
+      - name: Build
         run: |
             git clone --recursive https://github.com/apache/tvm tvm
             cd tvm
-      - name: Build
-        run: |
             conda env create --file conda/build-environment.yaml
             conda actiave tvm-build
             mkdir build
