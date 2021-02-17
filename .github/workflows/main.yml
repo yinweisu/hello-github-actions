@@ -13,6 +13,7 @@ jobs:
       - name: Checkout TVM
         run: |
             git clone --recursive https://github.com/apache/tvm tvm
+            cd tvm
       - name: Build
         run: |
             conda env create --file conda/build-environment.yaml
