@@ -5,6 +5,21 @@ jobs:
     name: Build TVM
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v2.0.0
+        with:
+          auto-update-conda: true
+          python-version: 3.7
       - name: Checkout TVM
         run: |
             git clone --recursive https://github.com/apache/tvm tvm
+      - name: Build
+        run: |
+            conda env create --file conda/build-environment.yaml
+            conda actiave tvm-build
+            mkdir build
+            cp cmake/config.cmake build
+            cd build
+            cmake .. -G Ninja
+            ninja
+
