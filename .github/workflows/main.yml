@@ -19,6 +19,6 @@ jobs:
             mkdir build
             cp cmake/config.cmake build
             cd build
-            cmake .. -G Ninja
-            ninja
+            cmake ..
+            make -j4
 
