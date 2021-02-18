@@ -14,13 +14,13 @@ jobs:
       - name: Build
         shell: bash -l {0}
         run: |
-            conda env create --file conda/build-environment.yaml
-            conda activate tvm-build
             git clone --recursive https://github.com/apache/tvm tvm
             cd tvm
+            conda env create --file conda/build-environment.yaml
+            conda activate tvm-build
             mkdir build
             cp cmake/config.cmake build
             cd build
-            cmake ..
+            cmake -DUSE_LLVM=ON ..
             make -j4
 
