@@ -12,6 +12,7 @@ jobs:
             git clone --recursive https://github.com/apache/tvm tvm
             cd tvm
             pwd
+            ls ~/
 #      - name: Build
 #        shell: bash -l {0}
 #        run: |
