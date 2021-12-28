@@ -27,4 +27,4 @@ jobs:
         with:
           ref: ${{ steps.sha.outputs.result }}
       - name: Run deployment
-        run: echo hi
+        run: echo hello
