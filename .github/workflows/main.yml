@@ -1,18 +1,18 @@
+name: Slash Command Dispatch
 on:
-  pull_request:
-    types: [opened]
   issue_comment:
     types: [created]
 jobs:
-  deploy:
+  slashCommandDispatch:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@master
-        id: check
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v2
         with:
-          trigger: '/deploy'
-          reaction: rocket
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - run: 'echo Found it!'
-        if: steps.check.outputs.triggered == 'true'
+          token: ${{ secrets.PAT }}
+          commands: |
+            deploy
+          dispatch-type: workflow
+          static-args: |
+            repository=${{ github.repository }}
+            comment-id=${{ github.event.comment.id }}
