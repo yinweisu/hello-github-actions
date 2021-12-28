@@ -8,12 +8,19 @@ on:
       comment-id:
         description: 'The comment-id of the slash command'
         required: true
+      pr-sha:
+        description: 'The pr-sha of which the slash command was dispatched'
+        required: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.pr-sha }}
       - name: deploy
-        run: echo deployed!
+        run: echo deployed! ${{ github.event.inputs.pr-sha }}
       - name: Create URL to the run output
         id: vars
         run: echo ::set-output name=run-url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
