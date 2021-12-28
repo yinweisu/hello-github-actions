@@ -20,7 +20,7 @@ jobs:
         with:
           ref: ${{ github.event.inputs.pr-sha }}
       - name: deploy
-        run: echo ${{ github.event.inputs.pr-sha }}
+        run: echo deployed ${{ github.event.inputs.pr-sha }}
       - name: Create URL to the run output
         id: vars
         run: echo ::set-output name=run-url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
