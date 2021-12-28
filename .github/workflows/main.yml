@@ -1,42 +1,30 @@
-name: A workflow for my Hello World file
-on: push
-jobs:
-  first_job:
-    name: Build TVM
-    runs-on: ubuntu-latest
-    steps:
-#      - name: Cache
-#        id: cache
-#        uses: actions/cache@v2
-#        shell: bash -l {0}
-#        with:
-#            path: ./tvm
-#            key: ${{ runner.os }}-
-#        run: |
-#            pwd
-#            git clone --recursive https://github.com/apache/tvm tvm
-#            cd tvm
-#            pwd
-#            ls ~/
-      - name: Build
-        shell: bash -l {0}
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y python3 python3-dev python3-setuptools gcc libtinfo-dev zlib1g-dev build-essential cmake libedit-dev libxml2-dev
-            wget -O - https://apt.llvm.org/llvm.sh
-            git clone --recursive https://github.com/apache/tvm tvm
-            cd tvm
-            mkdir build
-            cp cmake/config.cmake build
-            cd build
-            cmake -DUSE_LLVM=ON ..
-            make -j4
-            cd .. && export PYTHONPATH=$(pwd)/python:$(pwd)/vta/python:$PYTHONPATH
-            echo $PYTHONPATH
-            pip3 install --upgrade pip
-            pip3 install --no-cache --upgrade numpy decorator attrs
-            python3 -c "import tvm"
-            ls /usr/lib
-            dpkg -L libtvm.so
-            
+name: Deploy
 
+on:
+  issue_comment:
+    types:
+    - created
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/deploy'}}
+    steps:
+    - name: Get PR SHA
+      id: sha
+      uses: actions/github-script@v4
+      with:
+        result-encoding: string
+        script: |
+          const { owner, repo, number } = context.issue;
+          const pr = await github.pulls.get({
+            owner,
+            repo,
+            pull_number: number,
+          });
+          return pr.data.head.sha          
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.sha.outputs.result }}
+      - name: Run deployment
+        run: echo hi
