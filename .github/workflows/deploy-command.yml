@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ${{ github.event.inputs.repository }}
-          issue-number: ${{ github.event.inputs.comment-id }}
+          comment-id: ${{ github.event.inputs.comment-id }}
           body: |
             [Command run output][1]
 
