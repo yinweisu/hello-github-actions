@@ -24,7 +24,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commands: |
-            deploy
+            platform_tests
           dispatch-type: workflow
           static-args: |
             repository=${{ github.repository }}
