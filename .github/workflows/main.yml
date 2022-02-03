@@ -6,13 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: benjlevesque/short-sha@v1.2
-        id: short-sha
-        with:
-          length: 6
-      - run: echo $SHA
-        env: 
-          SHA: ${{ steps.short-sha.outputs.sha }}
-      - run: echo $SHA
-        env: 
-          SHA: ${{ env.SHA }}
+      - run: |
+          short_sha=$(git rev-parse --short "$GITHUB_SHA")
+          echo "SHORT_SHA=$short_sha" >> $GITHUB_ENV
+      - run: echo ${{ env.SHORT_SHA }}
