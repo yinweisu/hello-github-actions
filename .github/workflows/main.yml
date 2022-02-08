@@ -1,5 +1,5 @@
 name: 'build-test'
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
   build:
@@ -11,3 +11,4 @@ jobs:
           short_sha=$(git rev-parse --short "$sha")
           echo "SHORT_SHA=$short_sha" >> $GITHUB_ENV
       - run: echo ${{ env.SHORT_SHA }}
+      - run: echo ${{ github.workflow-github.ref }}
