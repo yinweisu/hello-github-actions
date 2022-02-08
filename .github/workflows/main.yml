@@ -1,9 +1,16 @@
 name: 'build-test'
 on: [pull_request, push]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo ${{ github.workflow }}-${{ github.ref }} || ${{  github.ref }}
+      - run: sleep 60
+      - name: Execute if the job was cancelled
+        if: ${{ cancelled() }}
+        run: echo cancelled
