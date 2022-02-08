@@ -6,9 +6,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          sha=${{ github.event.pull_request.head.sha }}
-          short_sha=$(git rev-parse --short "$sha")
-          echo "SHORT_SHA=$short_sha" >> $GITHUB_ENV
-      - run: echo ${{ env.SHORT_SHA }}
       - run: echo ${{ github.workflow-github.ref }}
