@@ -8,7 +8,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.repository != 'yinweisu/hello-github-actions' }
+    if: ${{ github.repository != 'yinweisu/hello-github-actions' }}
     steps:
       - uses: actions/checkout@v2
       - run: |
