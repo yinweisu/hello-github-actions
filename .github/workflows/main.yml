@@ -8,22 +8,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.repository != 'yinweisu/hello-github-actions' }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::377786338321:role/test_oidc
+          aws-region: us-east-1
       - run: |
-          python3 -c "import os; os.environ['abc']='123'"
-          echo $abc
-      - name: test
-        if: ${{ github.repository == 'yinweisu/hello-github-actions' && (github.event_name == 'pull_request' || github.event_name == 'push') }}
-        run: |
-          echo hi
-      - name: Execute if the job was cancelled
-        if: ${{ cancelled() }}
-        run: echo cancelled
-  test:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - run: echo hi
+          aws s3 ls
+
 
