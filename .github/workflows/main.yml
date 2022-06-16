@@ -13,6 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "hi {{ github.ref }}"
+          echo hi {{ github.ref }}
 
 
