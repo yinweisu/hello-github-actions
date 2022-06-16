@@ -12,12 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS credentials from Test account
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::377786338321:role/test_oidc
-          aws-region: us-east-1
       - run: |
-          aws s3 ls
+          echo "hi {{ github.ref }}"
 
 
