@@ -1,5 +1,8 @@
-name: 'build-test'
-on: [pull_request_target, push]
+name: Pypi Release
+
+on:
+  release:
+    types: [created]
 
 permissions:
   id-token: write
