@@ -1,5 +1,8 @@
-name: 'build-test'
-on: [pull_request_target, push]
+name: Pypi Release
+
+on:
+  release:
+    types: [created]
 
 permissions:
   id-token: write
@@ -13,6 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo hi "${{ github.ref }}"
+          echo im on master "${{ github.ref }}"
 
 
