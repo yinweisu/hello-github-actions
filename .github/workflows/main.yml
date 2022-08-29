@@ -1,19 +1,33 @@
-name: Pypi Release
+name: Cloud Continuous Integration
 
 on:
-  push:
+  pull_request:
+   types: [labeled]
+   
 
 permissions:
   id-token: write
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  build:
+  permission_check:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo im on master "${{ github.ref }}"
-
+      - name: Check for Actor Permission
+        id: check
+        continue-on-error: true
+        uses: prince-chrismc/check-actor-permissions-action@v2
+        with:
+          github_token: ${{ github.token }}
+          permission: write
+      - name: Check PR Safe to Run
+        if: ${{ github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'cloud safe to test') == 'false') }}
+        run: exit 1
+      - name: Remove Safe to Test Label  # One commit is safe doesn't mean the next commit is safe.
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions-ecosystem/action-remove-labels@v1.3.0
+        with:
+          labels: 'cloud safe to test
