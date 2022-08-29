@@ -1,8 +1,7 @@
 name: Pypi Release
 
 on:
-  release:
-    types: [created]
+  push:
 
 permissions:
   id-token: write
