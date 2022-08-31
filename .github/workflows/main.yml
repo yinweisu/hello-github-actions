@@ -1,8 +1,8 @@
 name: Cloud Continuous Integration
 
 on:
-  pull_request:
-   types: [labeled]
+  pull_request_target:
+   types: [labeled, synchronize]
    
 
 permissions:
@@ -25,10 +25,10 @@ jobs:
           github_token: ${{ github.token }}
           permission: write
       - name: Check PR Safe to Run
-        if: ${{ github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'cloud safe to test') == 'false') }}
+        if: ${{ github.event_name == 'pull_request_target' && (contains(github.event.pull_request.labels.*.name, 'cloud safe to test') == 'false') }}
         run: exit 1
       - name: Remove Safe to Test Label  # One commit is safe doesn't mean the next commit is safe.
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request_target' }}
         uses: actions-ecosystem/action-remove-labels@v1.3.0
         with:
           labels: 'cloud safe to test'
