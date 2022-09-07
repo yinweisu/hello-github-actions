@@ -17,4 +17,4 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo '${{ github.event.pull_request.head.ref }}'
+          echo '${{ github.ref }}'
