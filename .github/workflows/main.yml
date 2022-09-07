@@ -1,9 +1,7 @@
 name: Cloud Continuous Integration
 
 on:
-  pull_request_target:
-   types: [labeled, synchronize]
-   
+  push:
 
 permissions:
   id-token: write
