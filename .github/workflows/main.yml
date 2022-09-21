@@ -24,10 +24,7 @@ jobs:
           filters: |
             test:
               - 'README.md'
-      - name: Skip if doc changes only
-        if: steps.changes.outputs.docs == 'true'
-        run:
-          exit 0
       - name: Echo
+        if: steps.changes.outputs.docs == 'False'
         run:
           echo hi
