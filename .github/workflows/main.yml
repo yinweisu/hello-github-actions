@@ -25,6 +25,6 @@ jobs:
             test:
               - 'README.md'
       - name: Echo
-        if: steps.changes.outputs.docs == 'False'
+        if: steps.changes.outputs.docs == 'false'
         run:
           echo hi
