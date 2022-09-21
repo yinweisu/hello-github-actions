@@ -1,7 +1,7 @@
 name: Cloud Continuous Integration
 
 on:
-  pull_request_target:
+  push:
 
 permissions:
   id-token: write
@@ -12,9 +12,20 @@ defaults:
     shell: bash
 
 jobs:
-  permission_check:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Test
-        run: |
-          echo abc-'${{ github.ref }}'
+      - name: Check if doc changes only
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            test:
+              - 'README.md'
+      - name: Skip if doc changes only
+        if: steps.changes.outputs.docs == 'true'
+        run:
+          exit 0
+      - name: Echo
+        run:
+          echo hi
