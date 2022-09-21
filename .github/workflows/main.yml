@@ -23,8 +23,8 @@ jobs:
         with:
           filters: |
             test:
-              - 'README.md'
+              - '!(README.md)'
       - name: Echo
-        if: steps.changes.outputs.test == 'false'
+        if: steps.changes.outputs.test == 'true'
         run:
           echo hi
