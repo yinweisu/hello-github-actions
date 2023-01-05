@@ -24,7 +24,5 @@ jobs:
           filters: |
             test:
               - '!(*README.md)'
-      - name: Echo
-        if: steps.changes.outputs.test == 'true'
-        run:
-          echo hi
+      - name: test
+        uses: autogluon/autogluon/.github/actions/setup-env-vars
