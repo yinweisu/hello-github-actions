@@ -20,17 +20,3 @@ jobs:
         # https://docs.github.com/en/actions/learn-github-actions/expressions#example-matching-an-array-of-strings
         if: contains(fromJSON('["cloud"]'), github.ref)
         run: exit 1
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Check if doc changes only
-        uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            test:
-              - '!(*README.md)'
-      - name: test
-        uses: autogluon/autogluon/.github/actions/setup-env-vars
