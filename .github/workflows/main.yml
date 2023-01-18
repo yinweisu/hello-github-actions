@@ -12,6 +12,14 @@ defaults:
     shell: bash
 
 jobs:
+  branch_check:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - name: Fail on restricted branch
+        # https://docs.github.com/en/actions/learn-github-actions/expressions#example-matching-an-array-of-strings
+        if: contains(fromJSON('["cloud"]'), github.ref)
+        run: exit 1
   test:
     runs-on: ubuntu-latest
     steps:
