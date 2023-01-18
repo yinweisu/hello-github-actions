@@ -20,3 +20,5 @@ jobs:
         # https://docs.github.com/en/actions/learn-github-actions/expressions#example-matching-an-array-of-strings
         if: contains(fromJSON('["cloud"]'), github.ref)
         run: exit 1
+      - name: test
+        run: echo ${{ github.ref }}
