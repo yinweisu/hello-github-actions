@@ -18,5 +18,7 @@ jobs:
     steps:
       - name: Fail on restricted branch
         # https://docs.github.com/en/actions/learn-github-actions/expressions#example-matching-an-array-of-strings
-        if: contains(fromJSON('["cloud"]'), github.ref)
+        if: contains(fromJSON('["cloud"]'), github.ref_name)
         run: exit 1
+      - name: test
+        run: echo ${{ github.ref_name }}
