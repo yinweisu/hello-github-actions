@@ -12,13 +12,19 @@ defaults:
     shell: bash
 
 jobs:
-  branch_check:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    steps:
-      - name: Fail on restricted branch
-        # https://docs.github.com/en/actions/learn-github-actions/expressions#example-matching-an-array-of-strings
-        if: contains(fromJSON('["cloud"]'), github.ref_name)
-        run: exit 1
-      - name: test
-        run: echo ${{ github.ref_name }}
+    build:
+      strategy:
+        matrix:
+          platform: [windows-latest]
+          python: ["3.8"]
+      runs-on: ${{ matrix.platform }}
+      name: Test
+      steps:
+        - name: graphviz
+          uses: tlylt/install-graphviz@main
+        - name: test
+          shell: bash -l {0}
+          run: |
+            pip install pygraphviz
+          
+        
