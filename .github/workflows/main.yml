@@ -20,11 +20,17 @@ jobs:
       runs-on: ${{ matrix.platform }}
       name: Test
       steps:
-        - name: graphviz
-          uses: tlylt/install-graphviz@main
+        - name: Setup Miniconda
+          uses: conda-incubator/setup-miniconda@v2.0.0
+          with:
+            activate-environment: autogluon_py3
+            auto-update-conda: true
+            python-version: ${{ matrix.python }}
+
         - name: test
           shell: bash -l {0}
           run: |
-            pip install pygraphviz
+            conda install --channel conda-forge pygraphviz
+            python -c "import pygraphviz"
           
         
