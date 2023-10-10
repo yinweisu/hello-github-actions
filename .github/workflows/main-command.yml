@@ -16,6 +16,12 @@ on:
       branch_or_pr_number:
         description: 'dummy parameter to allow benchmark workflow to run'
         required: false
+      branch_name:
+        description: 'get branch name'
+        required: true
+      fork_repo:
+        description: 'get fork repository'
+        required: true
 
 permissions:
   id-token: write
@@ -45,5 +51,7 @@ jobs:
             echo "Comment Body: ${{ github.event.comment.body }}"
             echo "Branch Name: ${{ github.event.pull_request.head.ref }}"
             echo "Fork Repository: ${{ github.event.pull_request.head.repo.full_name }}"
+            echo "Var Branch Name: ${{ github.event.inputs.branch_name }}"
+            echo "Var Fork Repository: ${{ github.event.inputs.fork_repo }}"
           
         
