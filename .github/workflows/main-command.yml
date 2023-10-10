@@ -53,5 +53,5 @@ jobs:
           run: |
             echo "GitHub Input Payload:"
             echo "${{ toJson(github) }}"
-            echo "FORKED_REPO: ${{ env.FORKED_REPO }}"
-            echo "FORKED_BRANCH: ${{ env.FORKED_BRANCH }}"
+            echo "FORKED_REPO: ${{ github.event.inputs.fork_name }}"
+            echo "FORKED_BRANCH: ${{ github.event.inputs.fork_branch }}"
