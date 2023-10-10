@@ -41,16 +41,14 @@ jobs:
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
           echo "TEST"
-          echo "FORKED_REPO=$forked_repo" > pr_info.env
-          echo "FORKED_BRANCH=$forked_branch" >> pr_info.env
-      - name: Source the environment file
-        run: source pr_info.env
+          Write-Output "::set-output name=FORK_NAME::$forked_repo"
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
         with:
           token: ${{ secrets.PAT }}
           permission: write
+          client-payload: '{"fork": "${{ steps.pr_info.outputs.FORK_NAME }}"}'
           commands: |
             benchmark
             main
@@ -61,8 +59,6 @@ jobs:
             comment-id=${{ github.event.comment.id }}
             pr-sha=${{ steps.sha.outputs.result }}
             branch_or_pr_number=PR-${{ steps.pr_number.outputs.result }}
-            forked-repo=$FORKED_REPO
-            forked-branch=$FORKED_BRANCH
       - name: Edit comment with error message
         if: steps.scd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1

@@ -51,6 +51,8 @@ jobs:
       steps:
         - name: View GitHub Input Payload
           run: |
+            echo ${{ github.event.client_payload }}
+            echo ${{ toJson(github.event.client_payload) }}
             echo "GitHub Input Payload:"
             echo "${{ toJson(github.events.input) }}"
             echo "FORKED_REPO: ${{ env.FORKED_REPO }}"
