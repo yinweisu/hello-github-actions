@@ -36,6 +36,7 @@ jobs:
           permission: write
           commands: |
             benchmark
+            main
             platform_tests
           dispatch-type: workflow
           static-args: |
