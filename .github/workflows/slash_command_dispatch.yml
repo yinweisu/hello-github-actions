@@ -40,8 +40,8 @@ jobs:
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
-          echo "::set-output name=FORK_NAME::$forked_repo"
-          echo "::set-output name=FORK_BRANCH::$forked_branch"
+          echo "FORK_NAME=$forked_repo" >> $GITHUB_OUTPUT
+          echo "FORK_BRANCH=$forked_branch" >> $GITHUB_OUTPUT
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
