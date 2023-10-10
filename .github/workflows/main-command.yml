@@ -16,12 +16,12 @@ on:
       branch_or_pr_number:
         description: 'dummy parameter to allow benchmark workflow to run'
         required: false
-      forked_branch:
+      fork_name:
+        description: 'get repo name'
+        required: true
+      fork_branch:
         description: 'get branch name'
-        required: false
-      forked_repo:
-        description: 'get fork repository'
-        required: false
+        required: true
 
 permissions:
   id-token: write
@@ -51,9 +51,7 @@ jobs:
       steps:
         - name: View GitHub Input Payload
           run: |
-            echo ${{ github.event.client_payload }}
-            echo ${{ toJson(github.event.client_payload) }}
             echo "GitHub Input Payload:"
-            echo "${{ toJson(github.events.input) }}"
+            echo "${{ toJson(github) }}"
             echo "FORKED_REPO: ${{ env.FORKED_REPO }}"
             echo "FORKED_BRANCH: ${{ env.FORKED_BRANCH }}"
