@@ -41,7 +41,7 @@ jobs:
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
           echo "TEST"
-          "::set-output name=FORK_NAME::$forked_repo"
+          echo "::set-output name=FORK_NAME::$forked_repo"
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
