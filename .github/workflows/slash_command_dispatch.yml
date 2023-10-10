@@ -6,6 +6,9 @@ jobs:
   slashCommandDispatch:
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.pull_request }}
+    env:
+      FORKED_REPO: ""
+      FORKED_BRANCH: ""
     steps:
       - name: Get PR SHA
         id: sha
@@ -41,8 +44,9 @@ jobs:
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
           echo "TEST"
-          echo "::set-env name=FORKED_REPO::$forked_repo"
-          echo "::set-env name=FORKED_BRANCH::$forked_branch"
+          # Set environment variables
+          echo "FORKED_REPO=$forked_repo" >> $GITHUB_ENV
+          echo "FORKED_BRANCH=$forked_branch" >> $GITHUB_ENV
           echo "TEST: ${{ env.FORKED_REPO }}"
       - name: Slash Command Dispatch
         id: scd
