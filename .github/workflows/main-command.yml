@@ -53,5 +53,12 @@ jobs:
             echo "Fork Repository: ${{ github.event.pull_request.head.repo.full_name }}"
             echo "Var Branch Name: ${{ github.event.inputs.branch_name }}"
             echo "Var Fork Repository: ${{ github.event.inputs.fork_repo }}"
+    viewEventPayload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: View GitHub Event Payload
+        run: |
+          echo "GitHub Event Payload:"
+          echo "${{ toJson(github.event) }}"
           
         

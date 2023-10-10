@@ -53,4 +53,11 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           body: |
             > ${{ steps.scd.outputs.error-message }}
+  viewEventPayload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: View GitHub Event Payload
+        run: |
+          echo "GitHub Event Payload:"
+          echo "${{ toJson(github.event) }}"
             
