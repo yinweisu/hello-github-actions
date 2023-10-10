@@ -41,10 +41,9 @@ jobs:
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
           echo "TEST"
-          echo "::set-output name=pr_info_fork_repo::$forked_repo"
-          echo "::set-output name=pr_info_fork_branch::$forked_branch"
-          echo "${{ steps.pr_info.outputs.pr_info_fork_repo }}"
-          echo "${{ steps.pr_info.outputs.pr_info_fork_branch }}"
+          echo "::set-env name=FORKED_REPO::$forked_repo"
+          echo "::set-env name=FORKED_BRANCH::$forked_branch"
+          echo "TEST: ${{ env.FORKED_REPO }}"
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
@@ -61,6 +60,8 @@ jobs:
             comment-id=${{ github.event.comment.id }}
             pr-sha=${{ steps.sha.outputs.result }}
             branch_or_pr_number=PR-${{ steps.pr_number.outputs.result }}
+            forked-repo=${{ env.FORKED_REPO }}
+            forked-branch=${{ env.FORKED_BRANCH }}
       - name: Edit comment with error message
         if: steps.scd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
