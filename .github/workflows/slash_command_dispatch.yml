@@ -51,3 +51,9 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           body: |
             > ${{ steps.scd.outputs.error-message }}
+      - name: Extract branch and fork info
+          run: |
+            echo "Comment Body: ${{ github.event.comment.body }}"
+            echo "Branch Name: ${{ github.event.pull_request.head.ref }}"
+            echo "Fork Repository: ${{ github.event.pull_request.head.repo.full_name }}"
+            

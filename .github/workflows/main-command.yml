@@ -40,11 +40,10 @@ jobs:
             activate-environment: autogluon_py3
             auto-update-conda: true
             python-version: ${{ matrix.python }}
-
-        - name: test
-          shell: bash -l {0}
+        - name: Extract branch and fork info
           run: |
-            conda install --channel conda-forge pygraphviz
-            python -c "import pygraphviz"
+            echo "Comment Body: ${{ github.event.comment.body }}"
+            echo "Branch Name: ${{ github.event.pull_request.head.ref }}"
+            echo "Fork Repository: ${{ github.event.pull_request.head.repo.full_name }}"
           
         
