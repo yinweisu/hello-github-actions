@@ -30,7 +30,11 @@ jobs:
             console.log(`Owner: ${owner}`);
             console.log(`Repo: ${repo}`);
             console.log(`Number: ${number}`);
-            console.log(`Context: ${context}`)
+            for (const key in context) {
+              if (Object.hasOwnProperty.call(context, key)) {
+                console.log(`${key}:`, context[key]);
+              }
+            }
             return number
       - name: Slash Command Dispatch
         id: scd
