@@ -68,4 +68,20 @@ jobs:
         run: |
           echo "GitHub Payload:"
           echo "${{ toJson(github) }}"
+      - name: Get Forked Repository and Branch
+        id: pr_info
+        run: |
+          # Get the pull request number from the GitHub context
+          pr_number="${{ github.event.pull_request.number }}"
+          
+          # Use the GitHub API to fetch information about the pull request
+          pr_info=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                      "https://api.github.com/repos/${{ github.repository }}/pulls/$pr_number")
+
+          # Extract the forked repository and branch from the pull request info
+          forked_repo=$(echo "$pr_info" | jq -r '.head.repo.full_name')
+          forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
+
+          echo "Forked Repository: $forked_repo"
+          echo "Forked Branch: $forked_branch"
             
