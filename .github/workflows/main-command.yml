@@ -1,36 +1,58 @@
-name: Cloud Continuous Integration
-
+name: Slash Command Dispatch
 on:
-  push:
-
-permissions:
-  id-token: write
-  pull-requests: write
-
-defaults:
-  run:
-    shell: bash
-
+  issue_comment:
+    types: [created]
 jobs:
-    build:
-      strategy:
-        matrix:
-          platform: [windows-latest, ubuntu-latest]
-          python: ["3.8"]
-      runs-on: ${{ matrix.platform }}
-      name: Test
-      steps:
-        - name: Setup Miniconda
-          uses: conda-incubator/setup-miniconda@v2.0.0
-          with:
-            activate-environment: autogluon_py3
-            auto-update-conda: true
-            python-version: ${{ matrix.python }}
+  slashCommandDispatch:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request }}
+    steps:
+      - name: Get PR SHA
+        id: sha
+        uses: actions/github-script@v4
+        with:
+          result-encoding: string
+          script: |
+            const { owner, repo, number } = context.issue;
+            const pr = await github.pulls.get({
+              owner,
+              repo,
+              pull_number: number,
+            });
+            return pr.data.head.sha
+      - name: Get PR number
+        id: pr_number
+        uses: actions/github-script@v4
+        with:
+          result-encoding: string
+          script: |
+            const { owner, repo, number } = context.issue;
+            return number
+      - name: Slash Command Dispatch
+        id: scd
+        uses: peter-evans/slash-command-dispatch@v2.3.0
+        with:
+          token: ${{ secrets.PAT }}
+          permission: write
+          commands: |
+            benchmark
+            main
+            platform_tests
+          dispatch-type: workflow
+          static-args: |
+            repository=${{ github.repository }}
+            comment-id=${{ github.event.comment.id }}
+            pr-sha=${{ steps.sha.outputs.result }}
+            branch_or_pr_number=PR-${{ steps.pr_number.outputs.result }}
+      - name: Edit comment with error message
+        if: steps.scd.outputs.error-message
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          body: |
+            > ${{ steps.scd.outputs.error-message }}
+      - name: Extract repo name, branch name and PR sha
+          shell: bash
+          run: echo "repository=${{ github.repository }} pr_sha=${{ steps.sha.outputs.result }}"
+          id: extract_branch
 
-        - name: test
-          shell: bash -l {0}
-          run: |
-            conda install --channel conda-forge pygraphviz
-            python -c "import pygraphviz"
-          
-        
