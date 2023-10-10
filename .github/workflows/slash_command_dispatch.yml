@@ -38,9 +38,11 @@ jobs:
           # Extract the forked repository and branch from the pull request info
           forked_repo=$(echo "$pr_info" | jq -r '.head.repo.full_name')
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
-
-          echo "FORKED_REPO=$forked_repo" >> $GITHUB_ENV
-          echo "FORKED_BRANCH=$forked_branch" >> $GITHUB_ENV
+          echo "Forked Repository: $forked_repo"
+          echo "Forked Branch: $forked_branch"
+          echo "TEST"
+          echo "${{ steps.pr_info.outputs.result }}"
+          echo "${{ toJson(steps.pr_info) }}"
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
@@ -85,8 +87,6 @@ jobs:
           forked_repo=$(echo "$pr_info" | jq -r '.head.repo.full_name')
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
 
-          # Loop through all environment variables in $GITHUB_ENV
-          while IFS= read -r line; do
-            echo "$line"
-          done <<< "$(printenv | grep '^GITHUB_ENV=')"
+          echo "Forked Repository: $forked_repo"
+          echo "Forked Branch: $forked_branch"
             
