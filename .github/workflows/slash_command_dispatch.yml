@@ -59,8 +59,8 @@ jobs:
   viewEventPayload:
     runs-on: ubuntu-latest
     steps:
-      - name: View GitHub Event Payload
+      - name: View Context Payload
         run: |
-          echo "GitHub Event Payload:"
-          echo "${{ toJson(github) }}"
+          echo "Context Payload:"
+          echo "${{ toJson(context) }}"
             
