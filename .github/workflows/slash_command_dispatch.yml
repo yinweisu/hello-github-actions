@@ -41,8 +41,10 @@ jobs:
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
           echo "TEST"
-          echo "${{ steps.pr_info.outputs.result }}"
-          echo "${{ toJson(steps.pr_info) }}"
+          echo "::set-output name=pr_info_fork_repo::$forked_repo"
+          echo "::set-output name=pr_info_fork_branch::$forked_branch"
+          echo "${{ steps.pr_info.outputs.pr_info_fork_repo }}"
+          echo "${{ steps.pr_info.outputs.pr_info_fork_branch }}"
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
