@@ -6,9 +6,6 @@ jobs:
   slashCommandDispatch:
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.pull_request }}
-    env:
-      FORKED_REPO: ""
-      FORKED_BRANCH: ""
     steps:
       - name: Get PR SHA
         id: sha
@@ -44,10 +41,10 @@ jobs:
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
           echo "TEST"
-          # Set environment variables
-          echo "FORKED_REPO=$forked_repo" >> $GITHUB_ENV
-          echo "FORKED_BRANCH=$forked_branch" >> $GITHUB_ENV
-          echo "TEST: ${{ env.FORKED_REPO }}"
+          echo "FORKED_REPO=$forked_repo" > pr_info.env
+          echo "FORKED_BRANCH=$forked_branch" >> pr_info.env
+      - name: Source the environment file
+        run: source pr_info.env
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
@@ -64,8 +61,8 @@ jobs:
             comment-id=${{ github.event.comment.id }}
             pr-sha=${{ steps.sha.outputs.result }}
             branch_or_pr_number=PR-${{ steps.pr_number.outputs.result }}
-            forked-repo=${{ env.FORKED_REPO }}
-            forked-branch=${{ env.FORKED_BRANCH }}
+            forked-repo=$FORKED_REPO
+            forked-branch=$FORKED_BRANCH
       - name: Edit comment with error message
         if: steps.scd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
