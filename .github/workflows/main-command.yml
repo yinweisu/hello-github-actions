@@ -18,10 +18,10 @@ on:
         required: false
       forked_branch:
         description: 'get branch name'
-        required: true
+        required: false
       forked_repo:
         description: 'get fork repository'
-        required: true
+        required: false
 
 permissions:
   id-token: write
@@ -52,6 +52,9 @@ jobs:
         - name: View GitHub Input Payload
           run: |
             echo "GitHub Input Payload:"
-            echo "${{ toJson(github.events.ipnut) }}"
+            echo "${{ toJson(github.events.input) }}"
+            echo "FORKED_REPO: ${{ env.FORKED_REPO }}"
+            echo "FORKED_BRANCH: ${{ env.FORKED_BRANCH }}"
+
           
         

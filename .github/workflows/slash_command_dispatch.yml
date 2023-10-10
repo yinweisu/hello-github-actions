@@ -39,8 +39,8 @@ jobs:
           forked_repo=$(echo "$pr_info" | jq -r '.head.repo.full_name')
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
 
-          echo "::set-output name=forked_repo::$forked_repo"
-          echo "::set-output name=forked_branch::$forked_branch"
+          echo "FORKED_REPO=$forked_repo" >> $GITHUB_ENV
+          echo "FORKED_BRANCH=$forked_branch" >> $GITHUB_ENV
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
@@ -57,8 +57,6 @@ jobs:
             comment-id=${{ github.event.comment.id }}
             pr-sha=${{ steps.sha.outputs.result }}
             branch_or_pr_number=PR-${{ steps.pr_number.outputs.result }}
-            forked_repo=${{ steps.pr_number.outputs.forked_repo }}
-            forked_branch=${{ steps.pr_number.outputs.forked_branch }}
       - name: Edit comment with error message
         if: steps.scd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
