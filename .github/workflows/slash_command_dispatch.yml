@@ -72,7 +72,7 @@ jobs:
         id: pr_info
         run: |
           # Get the pull request number from the GitHub context
-          pr_number=${{ github.event.pull_request.number }}
+          pr_number=${{ github.event.issue.number }}
           
           # Use the GitHub API to fetch information about the pull request
           pr_info=$(curl -s -H "Authorization: token ${{ secrets.PAT }}" \
