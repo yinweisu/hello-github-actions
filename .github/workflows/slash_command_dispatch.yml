@@ -85,6 +85,6 @@ jobs:
           forked_repo=$(echo "$pr_info" | jq -r '.head.repo.full_name')
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
 
-          echo "Forked Repository: $forked_repo"
-          echo "Forked Branch: $forked_branch"
+          echo "Forked Repository: $FORKED_REPO"
+          echo "Forked Branch: $FORKED_BRANCH"
             
