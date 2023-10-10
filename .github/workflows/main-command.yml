@@ -2,6 +2,20 @@ name: Cloud Continuous Integration
 
 on:
   push:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: 'The repository from which the slash command was dispatched'
+        required: true
+      comment-id:
+        description: 'The comment-id of the slash command'
+        required: true
+      pr-sha:
+        description: 'The pr-sha of which the slash command was dispatched'
+        required: true
+      branch_or_pr_number:
+        description: 'dummy parameter to allow benchmark workflow to run'
+        required: false
 
 permissions:
   id-token: write
@@ -15,7 +29,7 @@ jobs:
     build:
       strategy:
         matrix:
-          platform: [windows-latest, ubuntu-latest]
+          platform: [ubuntu-latest]
           python: ["3.8"]
       runs-on: ${{ matrix.platform }}
       name: Test
