@@ -47,11 +47,11 @@ jobs:
             auto-update-conda: true
             python-version: ${{ matrix.python }}
     viewEventPayload:
-    runs-on: ubuntu-latest
-    steps:
-      - name: View GitHub Payload
-        run: |
-          echo "GitHub Payload:"
-          echo "${{ toJson(github) }}"
+      runs-on: ubuntu-latest
+      steps:
+        - name: View GitHub Payload
+          run: |
+            echo "GitHub Payload:"
+            echo "${{ toJson(github) }}"
           
         
