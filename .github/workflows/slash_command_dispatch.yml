@@ -85,6 +85,8 @@ jobs:
           forked_repo=$(echo "$pr_info" | jq -r '.head.repo.full_name')
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
 
-          echo "Forked Repository: $FORKED_REPO"
-          echo "Forked Branch: $FORKED_BRANCH"
+          # Loop through all environment variables in $GITHUB_ENV
+          while IFS= read -r line; do
+            echo "$line"
+          done <<< "$(printenv | grep '^GITHUB_ENV=')"
             
