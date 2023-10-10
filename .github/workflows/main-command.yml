@@ -46,19 +46,12 @@ jobs:
             activate-environment: autogluon_py3
             auto-update-conda: true
             python-version: ${{ matrix.python }}
-        - name: Extract branch and fork info
-          run: |
-            echo "Comment Body: ${{ github.event.comment.body }}"
-            echo "Branch Name: ${{ github.event.pull_request.head.ref }}"
-            echo "Fork Repository: ${{ github.event.pull_request.head.repo.full_name }}"
-            echo "Var Branch Name: ${{ github.event.inputs.branch_name }}"
-            echo "Var Fork Repository: ${{ github.event.inputs.fork_repo }}"
     viewEventPayload:
     runs-on: ubuntu-latest
     steps:
-      - name: View GitHub Event Payload
+      - name: View GitHub Payload
         run: |
-          echo "GitHub Event Payload:"
-          echo "${{ toJson(github.event) }}"
+          echo "GitHub Payload:"
+          echo "${{ toJson(github) }}"
           
         
