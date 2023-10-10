@@ -72,10 +72,10 @@ jobs:
         id: pr_info
         run: |
           # Get the pull request number from the GitHub context
-          pr_number="${{ github.event.pull_request.number }}"
+          pr_number=${{ github.event.pull_request.number }}
           
           # Use the GitHub API to fetch information about the pull request
-          pr_info=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          pr_info=$(curl -s -H "Authorization: token ${{ secrets.PAT }}" \
                       "https://api.github.com/repos/${{ github.repository }}/pulls/$pr_number")
 
           # Extract the forked repository and branch from the pull request info
