@@ -40,15 +40,14 @@ jobs:
           forked_branch=$(echo "$pr_info" | jq -r '.head.ref')
           echo "Forked Repository: $forked_repo"
           echo "Forked Branch: $forked_branch"
-          echo "TEST"
           echo "::set-output name=FORK_NAME::$forked_repo"
+          echo "::set-output name=FORK_BRANCH::$forked_branch"
       - name: Slash Command Dispatch
         id: scd
         uses: peter-evans/slash-command-dispatch@v2.3.0
         with:
           token: ${{ secrets.PAT }}
           permission: write
-          client-payload: '{"fork": "${{ steps.pr_info.outputs.FORK_NAME }}"}'
           commands: |
             benchmark
             main
@@ -59,7 +58,8 @@ jobs:
             comment-id=${{ github.event.comment.id }}
             pr-sha=${{ steps.sha.outputs.result }}
             branch_or_pr_number=PR-${{ steps.pr_number.outputs.result }}
-            test=${{ steps.pr_info.outputs.FORK_NAME }}
+            fork_name=${{ steps.pr_info.outputs.FORK_NAME }}
+            fork_branch=${{ steps.pr_info.outputs.FORK_BRANCH }}
       - name: Edit comment with error message
         if: steps.scd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
