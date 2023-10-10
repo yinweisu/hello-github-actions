@@ -27,6 +27,9 @@ jobs:
           result-encoding: string
           script: |
             const { owner, repo, number } = context.issue;
+            console.log(`Owner: ${owner}`);
+            console.log(`Repo: ${repo}`);
+            console.log(`Number: ${number}`);
             return number
       - name: Slash Command Dispatch
         id: scd
