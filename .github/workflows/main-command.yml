@@ -18,10 +18,10 @@ on:
         required: false
       branch_name:
         description: 'get branch name'
-        required: true
+        required: false
       fork_repo:
         description: 'get fork repository'
-        required: true
+        required: false
 
 permissions:
   id-token: write
